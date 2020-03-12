@@ -2,13 +2,27 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+
+const cardParent = document.querySelector('div.cards');
+
 axios.get('https://api.github.com/users/dalgobbopat')
     .then(response => {
-        console.log(response)
+        console.log(response);
+        cardParent.append(MyCard(response.data))
     })
     .catch(error => {
         console.log('the data was not retured', error)
     });
+
+axios.get('https://api.github.com/users/dalgobbopat/followers')
+    .then(response => {
+        console.log(response);
+        response.data.forEach(card => cardParent.append(MyCard(card)))
+    })
+    .catch(error => {
+        console.log('the data was not retured', error)
+    });
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -32,12 +46,9 @@ axios.get('https://api.github.com/users/dalgobbopat')
 */
 
 const followersArray = [
-    'tetondan',
-    'dustinmyers',
-    'justsml',
-    'luishrd',
-    'bigknell'
+
 ];
+
 
 
 /* Step 3: Create a function that accepts a single object as its only argument,
@@ -73,9 +84,8 @@ function MyCard(obj) {
         bio = document.createElement('p');
 
 
-    newCard.append(image, cardinfo);
-    cardinfo.append(name, username, location, followers, following, bio);
-    profile.append(gitaddress);
+
+
 
     newCard.classList.add('card')
     name.classList.add('name');
@@ -86,23 +96,22 @@ function MyCard(obj) {
     name.textContent = obj.name;
     username.textContent = obj.login;
     location.textContent = `Location: ${obj.location}`;
-    profile.link = obj.html_url;
+    profile.textContent = 'Profile:', obj.html_url;
+    gitaddress.href = obj.html_url;
     followers.textContent = `Followers: ${obj.followers}`;
     following.textContent = `Following: ${obj.following}`;
     bio.textContent = `Bio: ${obj.bio}`;
 
 
+    newCard.append(image, cardinfo);
+    cardinfo.append(name, username, location, followers, following, bio);
+    profile.append(gitaddress);
+
+
     return newCard;
 }
 
-const cards = document.querySelector('.cards');
-axios.get('https://api.github.com/users/dalgobbopat')
-    .then(response => {
-        cards.append(MyCard(response.data));
-    })
-    .catch(error => {
-        console.log('Wrong', error);
-    });
+
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
