@@ -53,16 +53,27 @@ const followersArray = [];
 
 */
 function MyCard(obj) {
-    const newCard = document.createElement('div'),
+    const newcard = document.createElement('div'),
         image = document.createElement('img'),
+        cardinfo = document.createElement('dive'),
         name = document.createElement('h3'),
-        userName = document.createElement('p'),
+        username = document.createElement('p'),
         location = document.createElement('p'),
         profile = document.createElement('p'),
-        gitAddress = document.createElement('a'),
+        gitaddress = document.createElement('a'),
         followers = document.createElement('p'),
         following = document.createElement('p'),
         bio = document.createElement('p');
+
+
+    newcard.append(image, cardinfo);
+    cardinfo.append(name, username, location, followers, following, bio);
+    profile.append(gitaddress);
+
+
+
+
+
 
 
 }
