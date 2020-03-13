@@ -3,9 +3,11 @@
            https://api.github.com/users/<your name>
 */
 
+
 const cardParent = document.querySelector('div.cards');
 
-axios.get('https://api.github.com/users/dalgobbopat')
+axios
+    .get('https://api.github.com/users/dalgobbopat')
     .then(response => {
         console.log(response);
         cardParent.append(MyCard(response.data))
@@ -13,15 +15,31 @@ axios.get('https://api.github.com/users/dalgobbopat')
     .catch(error => {
         console.log('the data was not retured', error)
     });
-
-axios.get('https://api.github.com/users/dalgobbopat/followers')
+axios
+    .get("https://api.github.com/users/dalgobbopat/followers")
     .then(response => {
-        console.log(response);
-        response.data.forEach(card => cardParent.append(MyCard(card)))
+        //console.log(response);  
+        const followersArray = response.data;
+        followersArray.forEach(follower => {
+            //console.log(follower.login);
+            axios
+                .get(`https://api.github.com/users/${follower.login}`)
+                .then(response => {
+                    cardParent.append(MyCard(response.data))
+                })
+        })
     })
     .catch(error => {
-        console.log('the data was not retured', error)
+        console.log("the data was not returned", error);
     });
+// axios.get(`https://api.github.com/users/dalgobbopat/followers/${items}`)
+//     .then(response => {
+//         console.log(response);
+//         response.data.forEach(card => cardParent.append(MyCard(card)))
+//     })
+//     .catch(error => {
+//         console.log('the data was not retured', error)
+//     });
 
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
@@ -46,7 +64,10 @@ axios.get('https://api.github.com/users/dalgobbopat/followers')
 */
 
 const followersArray = [
-
+    'tippitytapp',
+    'devjaymoe',
+    'CarlosAA10',
+    'mrsimpson3000',
 ];
 
 
